@@ -5,6 +5,7 @@ describe('GetThreadsUseCase', () => {
   let mockCommentsRepository;
   let mockRepliesRepository;
   let mockUserRepository;
+  let mockLikesRepository;
 
   beforeEach(() => {
     mockThreadsRepository = {
@@ -19,6 +20,9 @@ describe('GetThreadsUseCase', () => {
     mockUserRepository = {
       getUsernameByIdUser: jest.fn(),
     };
+    mockLikesRepository = {
+      getLikesCommentRows: jest.fn(),
+    };
   });
 
   it('should return complete thread with comments and replies, including deleted ones', async () => {
@@ -27,6 +31,7 @@ describe('GetThreadsUseCase', () => {
       commentsRepository: mockCommentsRepository,
       repliesRepository: mockRepliesRepository,
       userRepository: mockUserRepository,
+      likesRepository: mockLikesRepository,
     });
 
     const threadId = 'thread-123';
@@ -88,6 +93,7 @@ describe('GetThreadsUseCase', () => {
     mockRepliesRepository.getReplyByIdComment.mockImplementation((commentId) =>
       Promise.resolve(fakeReplies[commentId] || [])
     );
+    mockLikesRepository.getLikesCommentRows.mockResolvedValue(5);
 
     const result = await useCase.execute({ threadId });
 
@@ -118,6 +124,7 @@ describe('GetThreadsUseCase', () => {
             },
           ],
           content: 'Comment A',
+          likeCount: 5,
         },
         {
           id: 'comment-2',
@@ -125,6 +132,7 @@ describe('GetThreadsUseCase', () => {
           date: '2025-01-03',
           replies: [],
           content: '**komentar telah dihapus**',
+          likeCount: 5,
         },
       ],
     });
@@ -139,6 +147,12 @@ describe('GetThreadsUseCase', () => {
       'comment-1'
     );
     expect(mockRepliesRepository.getReplyByIdComment).toHaveBeenCalledWith(
+      'comment-2'
+    );
+    expect(mockLikesRepository.getLikesCommentRows).toHaveBeenCalledWith(
+      'comment-1'
+    );
+    expect(mockLikesRepository.getLikesCommentRows).toHaveBeenCalledWith(
       'comment-2'
     );
     expect(mockUserRepository.getUsernameByIdUser).toHaveBeenCalledWith(
