@@ -19,5 +19,5 @@ jobs:
 
       - name: Install Railway and deploy
         run: |
-          npm install -g railway
-          railway up
+          npm install -g @railway/cli
+          railway up --service form_api_project
