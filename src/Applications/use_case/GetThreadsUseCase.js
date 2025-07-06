@@ -4,11 +4,13 @@ class GetThreadsUseCase {
     commentsRepository,
     repliesRepository,
     userRepository,
+    likesRepository,
   }) {
     this._threadsRepository = threadsRepository;
     this._commentsRepository = commentsRepository;
     this._repliesRepository = repliesRepository;
     this._userRepository = userRepository;
+    this._likesRepository = likesRepository;
   }
 
   async execute(params) {
@@ -35,19 +37,23 @@ class GetThreadsUseCase {
         comments[i].owner
       );
       const newReplies = await this._newReplies(comments[i].id);
-
+      const newlikes = await this._likesRepository.getLikesCommentRows(
+        comments[i].id
+      );
       comments[i].username = owner;
       comments[i].replies = newReplies;
+      comments[i].likeCount = newlikes;
     }
 
     const resultRows = comments.map(
-      ({ id, content, date, username, is_delete, replies }) => {
+      ({ id, content, date, username, is_delete, replies, likeCount }) => {
         return {
           id,
           username,
           date,
           replies,
           content: is_delete ? '**komentar telah dihapus**' : content,
+          likeCount,
         };
       }
     );
