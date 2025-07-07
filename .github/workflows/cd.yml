@@ -5,18 +5,22 @@ on:
     branches:
       - main
 
-env:
-  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Railway and deploy
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install depedenci and implementasi
         run: |
+          npm install
           npm install -g @railway/cli
           railway up --service form_api_project
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
