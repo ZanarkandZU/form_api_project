@@ -1,10 +1,9 @@
 const LikesRepository = require('../../Domains/likes/LikesRepository');
 
 class LikesRepositoryPostgres extends LikesRepository {
-  constructor(pool, generateId) {
+  constructor(pool) {
     super();
     this._pool = pool;
-    this._generateId = generateId;
   }
   async addLikeComment(idComment, owner) {
     const query = {
@@ -22,7 +21,7 @@ class LikesRepositoryPostgres extends LikesRepository {
     };
 
     const result = await this._pool.query(query);
-    return result.rows[0].id_comment;
+    return result.rows;
   }
   async removeLikeComment(owner) {
     const query = {

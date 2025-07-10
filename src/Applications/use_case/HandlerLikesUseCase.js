@@ -11,8 +11,9 @@ class HandlerLikesUseCase {
 
     try {
       const dataComment = await this._likesRepository.getLikeComment(owner);
+      const result = dataComment.some((item) => item.id_comment === commentId);
 
-      if (commentId === dataComment) {
+      if (result) {
         await this._likesRepository.removeLikeComment(owner);
       } else {
         await this._likesRepository.addLikeComment(commentId, owner);

@@ -40,6 +40,7 @@ class GetThreadsUseCase {
       const newlikes = await this._likesRepository.getLikesCommentRows(
         comments[i].id
       );
+
       comments[i].username = owner;
       comments[i].replies = newReplies;
       comments[i].likeCount = newlikes;

@@ -14,5 +14,8 @@ describe('LikesRepository', () => {
     await expect(likesRepository.removeLikeComment({})).rejects.toThrowError(
       'LIKES_REPOSITORY.METHOD_NOT_IMPLEMENTED'
     );
+    await expect(likesRepository.getLikesCommentRows({})).rejects.toThrowError(
+      'LIKES_REPOSITORY.METHOD_NOT_IMPLEMENTED'
+    );
   });
 });

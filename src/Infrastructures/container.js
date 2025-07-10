@@ -119,9 +119,6 @@ container.register([
         {
           concrete: pool,
         },
-        {
-          concrete: nanoid,
-        },
       ],
     },
   },
@@ -284,6 +281,10 @@ container.register([
         {
           name: 'userRepository',
           internal: UserRepository.name,
+        },
+        {
+          name: 'likesRepository',
+          internal: LikesRepository.name,
         },
       ],
     },

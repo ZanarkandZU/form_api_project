@@ -6,7 +6,7 @@ exports.up = (pgm) => {
     },
     id_user: {
       type: 'VARCHAR(50)',
-      primaryKey: true,
+      notNull: true,
     },
   });
 };
