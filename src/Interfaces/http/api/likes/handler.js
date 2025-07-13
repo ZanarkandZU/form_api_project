@@ -7,13 +7,12 @@ class LikesHandler {
   }
 
   async handlerLikesComent(request, h) {
-      const { id: credentialId } = request.auth.credentials;
-      
-      const createLikes = this._container.getInstance(HandlerLikesUseCase.name);
-      const result = await createLikes.execute(request.params, credentialId);
-      
-      return result;
-   
+    const { id: credentialId } = request.auth.credentials;
+
+    const createLikes = this._container.getInstance(HandlerLikesUseCase.name);
+    const result = await createLikes.execute(request.params, credentialId);
+
+    return result;
   }
 }
 

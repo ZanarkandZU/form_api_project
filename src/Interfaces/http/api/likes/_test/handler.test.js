@@ -13,12 +13,12 @@ describe('LikesHandler', () => {
 
     const mockReques = {
       params: {
-        threadId: 'comment-123',
+        threadId: 'thread-123',
         commentId: 'comment-123',
       },
       auth: {
         credentials: {
-          credentialId: 'user-123',
+          id: 'user-123',
         },
       },
     };

@@ -11,7 +11,7 @@ const likes = require('../../Interfaces/http/api/likes');
 
 const createServer = async (container) => {
   const server = Hapi.server({
-    host: process.env.HOST || '0.0.0.0',
+    host: process.env.HOST,
     port: process.env.PORT,
   });
 

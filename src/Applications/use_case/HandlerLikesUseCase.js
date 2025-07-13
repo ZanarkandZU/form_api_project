@@ -9,16 +9,15 @@ class HandlerLikesUseCase {
     const { threadId, commentId } = params;
     await this.verifyParams(threadId, commentId);
 
-    try {
-      const dataComment = await this._likesRepository.getLikeComment(owner);
-      const result = dataComment.some((item) => item.id_comment === commentId);
+    const getLikes = await this._likesRepository.getLikeComment(
+      commentId,
+      owner
+    );
+    const result = getLikes.some((item) => item.id_comment === commentId);
 
-      if (result) {
-        await this._likesRepository.removeLikeComment(owner);
-      } else {
-        await this._likesRepository.addLikeComment(commentId, owner);
-      }
-    } catch {
+    if (result) {
+      await this._likesRepository.removeLikeComment(commentId, owner);
+    } else {
       await this._likesRepository.addLikeComment(commentId, owner);
     }
 
