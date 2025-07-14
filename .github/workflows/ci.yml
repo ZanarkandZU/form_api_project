@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies, migrate, and test
+      - name: install migrate and test
         run: |
           npm install
           npm run migrate:test
